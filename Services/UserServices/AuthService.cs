@@ -2,6 +2,7 @@ using System;
 using ImageAnnotationAPI.Dtos.UserDtos;
 using ImageAnnotationAPI.Entities;
 using ImageAnnotationAPI.Repositories;
+using ImageAnnotationAPI.Repositories.UserRepositories;
 
 namespace ImageAnnotationAPI.Services.UserServices;
 

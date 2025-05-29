@@ -7,8 +7,8 @@ namespace ImageAnnotationAPI.Data;
 
 public class AnnotationContext : IdentityDbContext<User>
 {
-    DbSet<Image> Images => Set<Image>();
-    DbSet<Annotation> Annotations => Set<Annotation>();
+    public DbSet<Image> Images => Set<Image>();
+    public DbSet<Annotation> Annotations => Set<Annotation>();
 
     public AnnotationContext(DbContextOptions<AnnotationContext> options) : base(options) { }
     protected override void OnModelCreating(ModelBuilder builder)
