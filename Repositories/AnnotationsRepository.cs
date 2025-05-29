@@ -20,4 +20,9 @@ public class AnnotationsRepository : IAnnotationsRepository
     {
         return await _context.Annotations.Include(ann =>ann.Image).Where(ann => ann.UserId == id).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
+
+    public async Task<Annotation?> GetAnnotationAsync(int id)
+    {
+        return await _context.Annotations.Include(ann => ann.Image).FirstOrDefaultAsync(ann => ann.ImageId == id);
+    }
 }

@@ -28,5 +28,27 @@ namespace ImageAnnotationAPI.Controllers
             var response = await _annotationsService.GetAnnotationsAsync(Request, pageNumber, pageSize);
             return Ok(response);
         }
+
+        //GET /api/annotations/id
+        [Authorize]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(AnnotationDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+
+        public async Task<ActionResult<AnnotationDto>> GetAnnotation(int id)
+        {
+            try
+            {
+                var dto = await _annotationsService.GetAnnotationAsync(Request, id);
+                return dto is null ? NotFound("Image not found.") : Ok(dto);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
+
     }
 }

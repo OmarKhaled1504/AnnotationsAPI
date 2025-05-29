@@ -38,4 +38,15 @@ public class AnnotationsService : IAnnotationsService
         };
 
     }
+
+    public async Task<AnnotationDto?> GetAnnotationAsync(HttpRequest request, int id)
+    {
+        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id);
+        if (annotation is null)
+            return null;
+        if (!CheckOwnership(annotation))
+            throw new UnauthorizedAccessException();
+        return annotation.ToDto(request);
+
+    }
 }
