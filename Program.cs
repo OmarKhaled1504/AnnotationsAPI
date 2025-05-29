@@ -25,6 +25,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAnnotationsRepository, AnnotationsRepository>();
 builder.Services.AddScoped<IAnnotationsService, AnnotationsService>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 
 builder.Services.AddHttpContextAccessor();

@@ -7,5 +7,6 @@ public interface IUnitOfWork : IDisposable
 {
     IUserRepository Users { get; }
     IAnnotationsRepository Annotations { get; }
+    IImageRepository Images { get; }
     Task<int> SaveChangesAsync();
 }

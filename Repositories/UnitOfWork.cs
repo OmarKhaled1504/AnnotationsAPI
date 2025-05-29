@@ -8,13 +8,15 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly AnnotationContext _context;
     public IUserRepository Users { get; }
+    public IImageRepository Images { get; }
     public IAnnotationsRepository Annotations { get; }
 
-    public UnitOfWork(AnnotationContext context, IUserRepository users, IAnnotationsRepository annotations)
+    public UnitOfWork(AnnotationContext context, IUserRepository users, IAnnotationsRepository annotations, IImageRepository images)
     {
         _context = context;
         Users = users;
         Annotations = annotations;
+        Images = images;
     }
 
     public async Task<int> SaveChangesAsync()
