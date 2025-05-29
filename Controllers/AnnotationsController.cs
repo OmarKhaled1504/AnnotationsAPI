@@ -50,5 +50,28 @@ namespace ImageAnnotationAPI.Controllers
             }
         }
 
+        //PUT /api/annotations/1
+        [Authorize]
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(AnnotationDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(400)]
+
+        public async Task<ActionResult<AnnotationDto>> UpdateAnnotation(int id, AnnotationUpdateDto dto)
+        {
+            try
+            {
+                var updatedDto = await _annotationsService.UpdateAnnotation(Request, id, dto);
+                return updatedDto is null ? NotFound("Image not found.") : Ok(updatedDto);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+        }
+
+
     }
 }

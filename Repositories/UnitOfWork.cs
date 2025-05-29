@@ -17,9 +17,9 @@ public class UnitOfWork : IUnitOfWork
         Annotations = annotations;
     }
 
-    public Task<int> SaveChangesAsync()
+    public async Task<int> SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        return await _context.SaveChangesAsync();
     }
     public void Dispose()
     {

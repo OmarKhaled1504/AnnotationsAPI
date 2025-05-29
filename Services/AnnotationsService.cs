@@ -49,4 +49,17 @@ public class AnnotationsService : IAnnotationsService
         return annotation.ToDto(request);
 
     }
+
+    public async Task<AnnotationDto?> UpdateAnnotation(HttpRequest request, int id, AnnotationUpdateDto dto)
+    {
+        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id);
+        if (annotation is null)
+            return null;
+        if (!CheckOwnership(annotation))
+            throw new UnauthorizedAccessException();
+        annotation.AnnotationType = dto.AnnotationType;
+        annotation.Annotated = true;
+        await _unitOfWork.SaveChangesAsync();
+        return annotation.ToDto(request);
+    }
 }
