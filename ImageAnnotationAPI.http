@@ -1,0 +1,6 @@
+@ImageAnnotationAPI_HostAddress = http://localhost:5184
+
+GET {{ImageAnnotationAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
