@@ -7,6 +7,25 @@ namespace ImageAnnotationAPI.Data;
 
 public class AnnotationContext : IdentityDbContext<User>
 {
-    public AnnotationContext(DbContextOptions<AnnotationContext> options) : base(options) { }
+    DbSet<Image> Images => Set<Image>();
+    DbSet<Annotation> Annotations => Set<Annotation>();
 
+    public AnnotationContext(DbContextOptions<AnnotationContext> options) : base(options) { }
+    protected override void OnModelCreating(ModelBuilder builder)
+{
+    base.OnModelCreating(builder); // Make sure Identity works
+
+    builder.Entity<Annotation>()
+        .HasKey(a => new { a.UserId, a.ImageId });
+
+    builder.Entity<Annotation>()
+        .HasOne(a => a.User)
+        .WithMany(u => u.Annotations)
+        .HasForeignKey(a => a.UserId);
+
+    builder.Entity<Annotation>()
+        .HasOne(a => a.Image)
+        .WithMany(i => i.Annotations)
+        .HasForeignKey(a => a.ImageId);
+}
 }

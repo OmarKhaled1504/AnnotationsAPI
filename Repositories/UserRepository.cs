@@ -27,7 +27,7 @@ public class UserRepository : IUserRepository
         {
             return (null, result.Errors.Select(e => e.Description));
         }
-        await _userManager.AddToRoleAsync(user, "User");
+        await _userManager.AddToRoleAsync(user, "Annotator");
         return (user, null);
     }
     public async Task<User?> GetUserByUserNameAsync(string username)
