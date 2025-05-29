@@ -2,8 +2,7 @@ using System;
 using ImageAnnotationAPI.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace ImageAnnotationAPI.Repositories;
-
+namespace ImageAnnotationAPI.Repositories.UserRepositories;
 public class UserRepository : IUserRepository
 {
     private readonly UserManager<User> _userManager;

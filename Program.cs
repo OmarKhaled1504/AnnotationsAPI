@@ -2,6 +2,8 @@ using System.Text;
 using ImageAnnotationAPI.Data;
 using ImageAnnotationAPI.Entities;
 using ImageAnnotationAPI.Repositories;
+using ImageAnnotationAPI.Repositories.UserRepositories;
+using ImageAnnotationAPI.Services;
 using ImageAnnotationAPI.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +22,11 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAnnotationsRepository, AnnotationsRepository>();
+builder.Services.AddScoped<IAnnotationsService, AnnotationsService>();
+
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(options =>
 {

@@ -1,7 +1,7 @@
 using System;
 using ImageAnnotationAPI.Entities;
 
-namespace ImageAnnotationAPI.Repositories;
+namespace ImageAnnotationAPI.Repositories.UserRepositories;
 
 public interface IUserRepository
 {
