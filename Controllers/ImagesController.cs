@@ -23,6 +23,7 @@ namespace ImageAnnotationAPI.Controllers
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(415)]
         public async Task<ActionResult<ImageDto>> AddImage(ImageCreateDto dto)
         {
             if (dto.File.Length == 0)
@@ -30,6 +31,18 @@ namespace ImageAnnotationAPI.Controllers
 
             var createdImage = await _imageService.AddImageAsync(dto);
             return CreatedAtAction(nameof(AddImage), new { id = createdImage.Id }, createdImage);
+        }
+
+        //DELETE /api/images/1
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            var response = await _imageService.DeleteImageAsync(id);
+            return response ? NoContent() : NotFound();
         }
 
     }

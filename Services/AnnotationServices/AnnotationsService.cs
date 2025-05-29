@@ -17,10 +17,6 @@ public class AnnotationsService : IAnnotationsService
         _unitOfWork = unitOfWork;
         _httpContextAccessor = httpContextAccessor;
     }
-    private bool CheckOwnership(Annotation annotation)
-    {
-        return annotation.UserId == GetUserId();
-    }
     private string GetUserId()
     {
         return _httpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
@@ -41,22 +37,18 @@ public class AnnotationsService : IAnnotationsService
 
     public async Task<AnnotationDto?> GetAnnotationAsync(HttpRequest request, int id)
     {
-        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id);
+        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id, GetUserId());
         if (annotation is null)
             return null;
-        if (!CheckOwnership(annotation))
-            throw new UnauthorizedAccessException();
         return annotation.ToDto(request);
 
     }
 
     public async Task<AnnotationDto?> UpdateAnnotation(HttpRequest request, int id, AnnotationUpdateDto dto)
     {
-        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id);
+        var annotation = await _unitOfWork.Annotations.GetAnnotationAsync(id,GetUserId());
         if (annotation is null)
             return null;
-        if (!CheckOwnership(annotation))
-            throw new UnauthorizedAccessException();
         annotation.AnnotationType = dto.AnnotationType;
         annotation.Annotated = true;
         await _unitOfWork.SaveChangesAsync();

@@ -4,6 +4,7 @@ using ImageAnnotationAPI.Entities;
 using ImageAnnotationAPI.Repositories;
 using ImageAnnotationAPI.Repositories.UserRepositories;
 using ImageAnnotationAPI.Services;
+using ImageAnnotationAPI.Services.ImageServices;
 using ImageAnnotationAPI.Services.UserServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAnnotationsRepository, AnnotationsRepository>();
 builder.Services.AddScoped<IAnnotationsService, AnnotationsService>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IImageService, ImageService>();
+
 
 
 builder.Services.AddHttpContextAccessor();

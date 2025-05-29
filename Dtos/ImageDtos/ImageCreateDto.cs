@@ -1,3 +1,7 @@
 namespace ImageAnnotationAPI.Dtos.ImageDtos;
 
-public record class ImageCreateDto(IFormFile File, string? Description);
+public class ImageCreateDto
+{
+    public IFormFile File { get; set; } = null!;
+    public string? Description { get; set; }
+}

@@ -35,19 +35,13 @@ namespace ImageAnnotationAPI.Controllers
         [ProducesResponseType(typeof(AnnotationDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(401)]
-        [ProducesResponseType(403)]
+
 
         public async Task<ActionResult<AnnotationDto>> GetAnnotation(int id)
         {
-            try
-            {
-                var dto = await _annotationsService.GetAnnotationAsync(Request, id);
-                return dto is null ? NotFound("Image not found.") : Ok(dto);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Forbid();
-            }
+
+            var dto = await _annotationsService.GetAnnotationAsync(Request, id);
+            return dto is null ? NotFound("Image not found.") : Ok(dto);
         }
 
         //PUT /api/annotations/1

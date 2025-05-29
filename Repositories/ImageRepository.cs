@@ -16,4 +16,13 @@ public class ImageRepository : IImageRepository
     {
         await _context.Images.AddAsync(image);
     }
+
+    public async Task<Image?> GetImageAsync(int id)
+    {
+        return await _context.Images.FindAsync(id);
+    }
+    public void DeleteImage(Image image)
+    {
+        _context.Images.Remove(image);
+    }
 }

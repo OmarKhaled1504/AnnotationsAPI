@@ -31,8 +31,42 @@ public class ImageService : IImageService
             FilePath = filePath,
             Description = dto.Description
         };
+
         await _unitOfWork.Images.AddImageAsync(created);
+
+        var users = await _unitOfWork.Users.GetAllUsersAsync();
+        foreach (var user in users)
+        {
+            var annotation = new Annotation
+            {
+                UserId = user.Id,
+                Image = created,
+                Annotated = false,
+                AnnotationType = string.Empty
+            };
+            await _unitOfWork.Annotations.AddAnnotationAsync(annotation);
+        }
+
+
         await _unitOfWork.SaveChangesAsync();
+
         return created.ToDto();
+    }
+
+    public async Task<bool> DeleteImageAsync(int id)
+    {
+        var image = await _unitOfWork.Images.GetImageAsync(id);
+        if (image is null)
+        {
+            return false;
+        }
+        var annotations = await _unitOfWork.Annotations.GetAllAnnotationsByImageIdAsync(image.Id);
+        foreach (var ann in annotations)
+        {
+            _unitOfWork.Annotations.DeleteAnnotation(ann);
+        }
+        _unitOfWork.Images.DeleteImage(image);
+        await _unitOfWork.SaveChangesAsync();
+        return true;
     }
 }

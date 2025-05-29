@@ -1,6 +1,7 @@
 using System;
 using ImageAnnotationAPI.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImageAnnotationAPI.Repositories.UserRepositories;
 public class UserRepository : IUserRepository
@@ -37,5 +38,10 @@ public class UserRepository : IUserRepository
     public async Task<bool> CheckPasswordAsync(User user, string password)
     {
         return await _userManager.CheckPasswordAsync(user, password);
+    }
+
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        return await _userManager.Users.ToListAsync();
     }
 }
