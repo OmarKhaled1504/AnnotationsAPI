@@ -71,10 +71,10 @@ Easily run the AnnotationsAPI and MySQL database together using Docker Compose:
    ```
 
 2. **Access the API:**
-   - The API will be available at: `http://localhost:5000`
+   - The API will be available at: `http://localhost:8080`
 
 3. **API Docs:**
-   - Swagger UI: `http://localhost:5000/swagger`
+   - Swagger UI: `http://localhost:8080/swagger`
 
 4. **Data Persistence:**
    - MySQL data is stored in a named Docker volume to persist across restarts.
