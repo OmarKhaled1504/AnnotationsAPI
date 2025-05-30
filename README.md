@@ -15,8 +15,7 @@ A secure and extensible RESTful API for managing image annotations. Built with A
 - 🧼 Clean DTO-based request/response models with validation
 - 🧠 Solid architecture with service, repository, and Unit of Work patterns
 - 🐬 MySQL integration using Pomelo.EntityFrameworkCore.MySql
-- 📜 AutoMapper-based model mapping for cleaner logic separation
-
+- 🐳 Effortless deployment via Docker Compose—run the API and database with a single command
 ---
 
 ## 🛠️ Technologies Used
@@ -54,6 +53,41 @@ AnnotationsAPI/
 ├── Program.cs             # App entry point
 └── README.md              # Project documentation
 ```
+
+---
+
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+
+---
+
+## 🚢 Deployment with Docker
+
+Easily run the AnnotationsAPI and MySQL database together using Docker Compose:
+
+1. **Build & Start the Services:**
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Access the API:**
+   - The API will be available at: `http://localhost:5000`
+
+3. **API Docs:**
+   - Swagger UI: `http://localhost:5000/swagger`
+
+4. **Data Persistence:**
+   - MySQL data is stored in a named Docker volume to persist across restarts.
+
+5. **Configuration:**
+   - Edit environment variables in `docker-compose.yml` to update database passwords, ports, etc.
+
+6. **Stopping the Services:**
+   ```bash
+   docker-compose down
+   ```
+
+> **Tip:** On first run, migrations will be applied automatically.
 
 ---
 
@@ -118,19 +152,8 @@ All incoming request models include data annotations like `[Required]`, `[String
 
 Example:
 ```csharp
-public class AnnotationDto
-{
-    [Required]
-    public int ImageId { get; set; }
-
-    [Required]
-    public string Label { get; set; }
-
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
-}
+public record class AnnotationUpdateDto(
+    [Required][StringLength(40)] string AnnotationType);
 ```
 
 ---
