@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 # Uploaded image files (local image storage)
 wwwroot/uploads/
+uploads/
