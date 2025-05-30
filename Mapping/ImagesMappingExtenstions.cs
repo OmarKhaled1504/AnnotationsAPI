@@ -15,8 +15,12 @@ public static class ImagesMappingExtenstions
             Description = dto.Description
         };
     }
-    public static ImageDto ToDto(this Image image)
+    public static ImageDto ToDto(this Image image, HttpRequest request)
     {
-        return new ImageDto(image.Id, image.FileName, image.FilePath, image.Description);
+        var url = $"{request.Scheme}://{request.Host}/uploads/{image.FileName}";
+        return new ImageDto(image.Id,
+        image.FileName,
+        url,
+        image.Description);
     }
 }

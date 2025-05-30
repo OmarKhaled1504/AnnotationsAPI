@@ -13,7 +13,7 @@ public class ImageService : IImageService
     {
         _unitOfWork = unitOfWork;
     }
-    public async Task<ImageDto> AddImageAsync(ImageCreateDto dto)
+    public async Task<ImageDto> AddImageAsync(ImageCreateDto dto, HttpRequest request)
     {
         var uploadsFolder = Path.Combine("wwwroot", "uploads");
         Directory.CreateDirectory(uploadsFolder);
@@ -50,7 +50,7 @@ public class ImageService : IImageService
 
         await _unitOfWork.SaveChangesAsync();
 
-        return created.ToDto();
+        return created.ToDto(request);
     }
 
     public async Task<bool> DeleteImageAsync(int id)

@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  webapi:
+    build: .
+    container_name: dotnet-webapi
+    restart: on-failure:10
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=AnnotationsDB;User=root;Password=yourpassword;
+      - Jwt__Key=12345678900987654321abcdefghij@#
+      - Jwt__Issuer=AnnotationsAPI
+      - Jwt__Audience=AnnotationsUsers
+    volumes:
+      - ./uploads:/app/wwwroot/uploads
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: AnnotationsDB
+      MYSQL_ROOT_PASSWORD: yourpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:

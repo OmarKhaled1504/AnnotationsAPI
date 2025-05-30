@@ -28,10 +28,8 @@ builder.Services.AddScoped<IAnnotationsRepository, AnnotationsRepository>();
 builder.Services.AddScoped<IAnnotationsService, AnnotationsService>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IImageService, ImageService>();
-
-
-
 builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new() { Title = "AnnotationsAPI", Version = "v1" });
@@ -101,12 +99,13 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();

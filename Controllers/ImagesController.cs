@@ -29,7 +29,7 @@ namespace ImageAnnotationAPI.Controllers
             if (dto.File.Length == 0)
                 return BadRequest("Empty File.");
 
-            var createdImage = await _imageService.AddImageAsync(dto);
+            var createdImage = await _imageService.AddImageAsync(dto, Request);
             return CreatedAtAction(nameof(AddImage), new { id = createdImage.Id }, createdImage);
         }
 
